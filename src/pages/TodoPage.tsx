@@ -18,8 +18,13 @@ export const TodoPage = () => {
               {'>'} TODO.SYS_
             </h1>
             <p className="text-cyber-green text-sm">
-              $ USER: {user?.email || 'UNKNOWN'} • [ACTIVE]
+              $ USER: {user?.nombre || 'UNKNOWN'} • [ACTIVE]
             </p>
+            {user?.email && (
+              <p className="text-cyber-blue/70 text-xs mt-1">
+                {user.email}
+              </p>
+            )}
           </div>
           <button
             onClick={logout}

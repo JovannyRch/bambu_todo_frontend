@@ -2,33 +2,33 @@ export type Priority = "alta" | "media" | "baja";
 
 export interface Todo {
   id: string;
-  title: string;
-  description?: string;
-  priority?: Priority;
-  completed: boolean;
+  nombre: string;
+  descripcion?: string;
+  prioridad?: Priority;
+  finalizada: boolean;
   userId?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  fechaCreacion?: string;
+  fechaActualizacion?: string;
 }
 
 export interface CreateTodoDto {
-  title: string;
-  description?: string;
-  priority?: Priority;
+  nombre: string;
+  descripcion?: string;
+  prioridad?: Priority;
 }
 
 export interface UpdateTodoDto {
-  title?: string;
-  description?: string;
-  priority?: Priority;
-  completed?: boolean;
+  nombre?: string;
+  descripcion?: string;
+  prioridad?: Priority;
+  finalizada?: boolean;
 }
 
 export interface ListTodoDto {
   page?: number;
   limit?: number;
-  priority?: Priority;
-  completed?: boolean;
+  prioridad?: Priority;
+  finalizada?: boolean;
 }
 
 export interface PaginationMeta {

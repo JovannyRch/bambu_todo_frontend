@@ -100,8 +100,8 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
         setReport((prev) => {
           if (!prev) return prev;
           const newTotal = prev.totalTodos - 1;
-          const newCompleted = todoToDelete.completed ? prev.completedTodos - 1 : prev.completedTodos;
-          const newPending = todoToDelete.completed ? prev.pendingTodos : prev.pendingTodos - 1;
+          const newCompleted = todoToDelete.finalizada ? prev.completedTodos - 1 : prev.completedTodos;
+          const newPending = todoToDelete.finalizada ? prev.pendingTodos : prev.pendingTodos - 1;
           return {
             ...prev,
             totalTodos: newTotal,

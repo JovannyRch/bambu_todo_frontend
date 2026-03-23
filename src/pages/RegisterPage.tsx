@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export const RegisterPage = () => {
+  const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -15,7 +16,7 @@ export const RegisterPage = () => {
     e.preventDefault();
     setError('');
 
-    if (!email || !password || !confirmPassword) {
+    if (!nombre || !email || !password || !confirmPassword) {
       setError('ERROR: MISSING_FIELDS');
       return;
     }
@@ -32,7 +33,7 @@ export const RegisterPage = () => {
 
     try {
       setIsLoading(true);
-      await register({ email, password });
+      await register({ nombre, email, password });
       navigate('/todos');
     } catch (err) {
       setError(err instanceof Error ? `ERROR: ${err.message}` : 'ERROR: REGISTRATION_FAILED');
@@ -66,6 +67,22 @@ export const RegisterPage = () => {
               {error}
             </div>
           )}
+
+          <div>
+            <label htmlFor="nombre" className="block text-sm font-medium text-cyber-blue mb-2 uppercase tracking-wider">
+              {'>'} NOMBRE
+            </label>
+            <input
+              type="text"
+              id="nombre"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+              placeholder="Tu nombre"
+              className="input-cyber w-full px-4 py-3 outline-none"
+              disabled={isLoading}
+              autoComplete="name"
+            />
+          </div>
 
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-cyber-blue mb-2 uppercase tracking-wider">

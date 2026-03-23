@@ -21,9 +21,9 @@ class TodoService {
       const params = new URLSearchParams();
       if (query?.page) params.append("page", query.page.toString());
       if (query?.limit) params.append("limit", query.limit.toString());
-      if (query?.priority) params.append("priority", query.priority);
-      if (typeof query?.completed === "boolean")
-        params.append("completed", query.completed.toString());
+      if (query?.prioridad) params.append("prioridad", query.prioridad);
+      if (typeof query?.finalizada === "boolean")
+        params.append("finalizada", query.finalizada.toString());
 
       const url = `${this.baseURL}/list${params.toString() ? `?${params.toString()}` : ""}`;
       console.log("🔍 Fetching todos from:", url);
@@ -116,8 +116,8 @@ class TodoService {
     }
   }
 
-  async toggleTodoComplete(id: string, completed: boolean): Promise<Todo> {
-    return this.updateTodo(id, { completed });
+  async toggleTodoComplete(id: string, finalizada: boolean): Promise<Todo> {
+    return this.updateTodo(id, { finalizada });
   }
 }
 

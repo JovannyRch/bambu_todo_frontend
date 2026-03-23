@@ -21,14 +21,14 @@ const getPriorityBadge = (priority?: Priority) => {
 
 export const TodoItem = ({ todo }: TodoItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editTitle, setEditTitle] = useState(todo.title);
-  const [editDescription, setEditDescription] = useState(todo.description || '');
-  const [editPriority, setEditPriority] = useState<Priority>(todo.priority || 'media');
+  const [editNombre, setEditNombre] = useState(todo.nombre);
+  const [editDescripcion, setEditDescripcion] = useState(todo.descripcion || '');
+  const [editPrioridad, setEditPrioridad] = useState<Priority>(todo.prioridad || 'media');
   const { updateTodo, deleteTodo, toggleTodo } = useTodos();
 
   const handleToggle = async () => {
     try {
-      await toggleTodo(todo.id, !todo.completed);
+      await toggleTodo(todo.id, !todo.finalizada);
     } catch (error) {
       console.error('Failed to toggle todo:', error);
     }
@@ -45,13 +45,13 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
   };
 
   const handleUpdate = async () => {
-    if (!editTitle.trim()) return;
+    if (!editNombre.trim()) return;
 
     try {
       await updateTodo(todo.id, {
-        title: editTitle,
-        description: editDescription || undefined,
-        priority: editPriority,
+        nombre: editNombre,
+        descripcion: editDescripcion || undefined,
+        prioridad: editPrioridad,
       });
       setIsEditing(false);
     } catch (error) {
@@ -60,9 +60,9 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
   };
 
   const handleCancel = () => {
-    setEditTitle(todo.title);
-    setEditDescription(todo.description || '');
-    setEditPriority(todo.priority || 'media');
+    setEditNombre(todo.nombre);
+    setEditDescripcion(todo.descripcion || '');
+    setEditPrioridad(todo.prioridad || 'media');
     setIsEditing(false);
   };
 
@@ -75,16 +75,16 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
         <div className="mb-3">
           <input
             type="text"
-            value={editTitle}
-            onChange={(e) => setEditTitle(e.target.value)}
+            value={editNombre}
+            onChange={(e) => setEditNombre(e.target.value)}
             className="input-cyber w-full px-3 py-2 outline-none"
             placeholder="$ title..."
           />
         </div>
         <div className="mb-3">
           <textarea
-            value={editDescription}
-            onChange={(e) => setEditDescription(e.target.value)}
+            value={editDescripcion}
+            onChange={(e) => setEditDescripcion(e.target.value)}
             className="input-cyber w-full px-3 py-2 outline-none resize-none"
             placeholder="$ description..."
             rows={2}
@@ -92,8 +92,8 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
         </div>
         <div className="mb-4">
           <select
-            value={editPriority}
-            onChange={(e) => setEditPriority(e.target.value as Priority)}
+            value={editPrioridad}
+            onChange={(e) => setEditPrioridad(e.target.value as Priority)}
             className="input-cyber w-full px-3 py-2 outline-none cursor-pointer"
           >
             <option value="baja">🟢 LOW</option>
@@ -120,22 +120,22 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
   }
 
   return (
-    <div className={`card-cyber p-6 mb-4 transition-all ${todo.completed ? 'opacity-70 border-cyber-green/60' : 'border-cyber-blue/40'}`}>
+    <div className={`card-cyber p-6 mb-4 transition-all ${todo.finalizada ? 'opacity-70 border-cyber-green/60' : 'border-cyber-blue/40'}`}>
       <div className="flex items-start gap-4">
         <button
           onClick={handleToggle}
           className={`flex flex-col items-center justify-center gap-1 px-4 py-3 min-w-[100px] font-bold text-xs uppercase transition-all rounded border-[3px] ${
-            todo.completed
+            todo.finalizada
               ? 'bg-cyber-green/30 border-cyber-green text-cyber-green shadow-[0_0_25px_rgba(0,255,65,0.8)] hover:bg-cyber-green hover:text-black'
               : 'bg-cyber-pink/30 border-cyber-pink text-cyber-pink shadow-[0_0_25px_rgba(255,0,110,0.8)] hover:bg-cyber-pink hover:text-black'
           }`}
-          title={todo.completed ? "Click to mark as TODO" : "Click to mark as DONE"}
+          title={todo.finalizada ? "Click to mark as TODO" : "Click to mark as DONE"}
         >
           <span className="text-2xl">
-            {todo.completed ? '✓' : '⬜'}
+            {todo.finalizada ? '✓' : '⬜'}
           </span>
           <span className="font-mono font-bold tracking-wider">
-            {todo.completed ? 'DONE' : 'TODO'}
+            {todo.finalizada ? 'DONE' : 'TODO'}
           </span>
         </button>
         
@@ -143,30 +143,30 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
           <div className="flex items-center gap-3 mb-2 flex-wrap">
             <h3
               className={`text-base font-bold ${
-                todo.completed ? 'line-through text-cyber-blue/40' : 'text-cyber-blue'
+                todo.finalizada ? 'line-through text-cyber-blue/40' : 'text-cyber-blue'
               }`}
             >
-              {'>'} {todo.title}
+              {'>'} {todo.nombre}
             </h3>
             &nbsp;
             <div className='flex items-center justify-center h-full'>
-                {getPriorityBadge(todo.priority)}
+                {getPriorityBadge(todo.prioridad)}
             </div>
           </div>
           
-          {todo.description && (
+          {todo.descripcion && (
             <p
               className={`text-sm mb-3 font-mono ${
-                todo.completed ? 'line-through text-cyber-blue/30' : 'text-cyber-blue/70'
+                todo.finalizada ? 'line-through text-cyber-blue/30' : 'text-cyber-blue/70'
               }`}
             >
-              $ {todo.description}
+              $ {todo.descripcion}
             </p>
           )}
           
-          {todo.createdAt && (
+          {todo.fechaCreacion && (
             <p className="text-xs text-cyber-blue/40 font-mono">
-              [CREATED: {new Date(todo.createdAt).toLocaleString('es-ES')}]
+              [CREATED: {new Date(todo.fechaCreacion).toLocaleString('es-ES')}]
             </p>
           )}
         </div>
@@ -175,7 +175,7 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
           <button
             onClick={() => setIsEditing(true)}
             className="bg-cyber-blue/20 border-2 border-cyber-blue text-white hover:bg-cyber-blue hover:text-black px-4 py-2 font-bold text-xs uppercase transition-all disabled:opacity-30 rounded"
-            disabled={todo.completed}
+            disabled={todo.finalizada}
           >
              EDIT
           </button>

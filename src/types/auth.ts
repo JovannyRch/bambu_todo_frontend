@@ -1,5 +1,6 @@
 export interface User {
   id: string;
+  nombre: string;
   email: string;
 }
 
@@ -9,6 +10,7 @@ export interface LoginDto {
 }
 
 export interface RegisterDto {
+  nombre: string;
   email: string;
   password: string;
 }

@@ -17,8 +17,8 @@ export const TodoList = () => {
       limit,
     };
     
-    if (filter === 'active') query.completed = false;
-    if (filter === 'completed') query.completed = true;
+    if (filter === 'active') query.finalizada = false;
+    if (filter === 'completed') query.finalizada = true;
     
     fetchTodos(query);
   }, [filter, currentPage, limit]);
